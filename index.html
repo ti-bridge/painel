@@ -251,6 +251,38 @@ fullscreenBtn.addEventListener("keydown", function(event) {
  * Inicialmente deixa os controles escondidos.
  */
 player.classList.remove("controls-visible");
+
+
+/* =========================================================
+   ATUALIZAÇÃO AUTOMÁTICA DO VÍDEO
+   ========================================================= */
+
+/*
+ * A cada 10 minutos, força o navegador a solicitar
+ * novamente o arquivo video.mp4.
+ *
+ * A página NÃO é recarregada.
+ */
+setInterval(function() {
+
+    const currentTime = video.currentTime;
+
+    video.src = "video.mp4?v=" + Date.now();
+
+    video.load();
+
+    /*
+     * Mantém aproximadamente a mesma posição
+     * em que o vídeo estava antes da atualização.
+     */
+    video.currentTime = currentTime;
+
+    video.play().catch(function(error) {
+        console.log("Não foi possível reproduzir o vídeo:", error);
+    });
+
+}, 10 * 60 * 1000);
+
 </script>
 
 </body>
