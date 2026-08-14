@@ -1,257 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="refresh" content="3600">
 
 <style>
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: black;
+
+html,
+body{
+
+margin:0;
+padding:0;
+
+width:100%;
+height:100%;
+
+background:#000;
+
+overflow:hidden;
+
 }
 
-#player {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background: black;
+img{
+
+width:100vw;
+height:100vh;
+
+object-fit:cover;
+
 }
 
-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Área dos controles */
-#controls {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 90px;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-
-    padding: 0 25px 20px;
-    box-sizing: border-box;
-
-    background: linear-gradient(
-        transparent,
-        rgba(0, 0, 0, 0.65)
-    );
-
-    opacity: 0;
-    transition: opacity 0.25s ease;
-
-    pointer-events: none;
-}
-
-/* Quando estiver ativo */
-#player.controls-visible #controls {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* Botão de tela cheia */
-#fullscreenBtn {
-    width: 58px;
-    height: 48px;
-
-    border: none;
-    border-radius: 5px;
-
-    background: rgba(30, 30, 30, 0.85);
-    color: white;
-
-    font-size: 27px;
-    line-height: 48px;
-
-    cursor: pointer;
-
-    outline: none;
-}
-
-/* Destaque quando o controle estiver sobre o botão */
-#fullscreenBtn:focus,
-#fullscreenBtn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-}
-
-/* Tela cheia */
-#player:fullscreen {
-    width: 100vw;
-    height: 100vh;
-}
-
-/* Compatibilidade Samsung/WebKit */
-#player:-webkit-full-screen {
-    width: 100vw;
-    height: 100vh;
-}
 </style>
+
 </head>
 
 <body>
 
-<div id="player">
-
-    <video id="video" autoplay muted loop playsinline>
-        <source src="video.mp4" type="video/mp4">
-    </video>
-
-    <div id="controls">
-        <button
-            id="fullscreenBtn"
-            type="button"
-            aria-label="Tela cheia">
-            ⛶
-        </button>
-    </div>
-
-</div>
-
-<script>
-const player = document.getElementById("player");
-const video = document.getElementById("video");
-const fullscreenBtn = document.getElementById("fullscreenBtn");
-
-let hideControlsTimer;
-
-/* Mostra os controles */
-function showControls() {
-    player.classList.add("controls-visible");
-
-    clearTimeout(hideControlsTimer);
-
-    hideControlsTimer = setTimeout(() => {
-        player.classList.remove("controls-visible");
-    }, 3000);
-}
-
-/* Entra em tela cheia */
-function enterFullscreen() {
-
-    const request =
-        player.requestFullscreen ||
-        player.webkitRequestFullscreen;
-
-    if (request) {
-        request.call(player);
-    }
-}
-
-/* Sai da tela cheia */
-function exitFullscreen() {
-
-    const exit =
-        document.exitFullscreen ||
-        document.webkitExitFullscreen;
-
-    if (exit) {
-        exit.call(document);
-    }
-}
-
-/* Botão */
-fullscreenBtn.addEventListener("click", function () {
-
-    if (
-        document.fullscreenElement ||
-        document.webkitFullscreenElement
-    ) {
-        exitFullscreen();
-    } else {
-        enterFullscreen();
-    }
-
-    showControls();
-});
-
-/*
- * Movimento do mouse / Air Mouse
- * Faz os controles aparecerem.
- */
-document.addEventListener("mousemove", function () {
-    showControls();
-});
-
-/*
- * Alguns controles remotos enviam eventos de movimento
- * diferentes do mouse convencional.
- */
-document.addEventListener("pointermove", function () {
-    showControls();
-});
-
-document.addEventListener("touchstart", function () {
-    showControls();
-});
-
-/*
- * Atualiza o ícone conforme o estado da tela cheia.
- */
-function updateFullscreenButton() {
-
-    const fullscreen =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement;
-
-    if (fullscreen) {
-        fullscreenBtn.innerHTML = "⛶";
-        fullscreenBtn.setAttribute(
-            "aria-label",
-            "Sair da tela cheia"
-        );
-    } else {
-        fullscreenBtn.innerHTML = "⛶";
-        fullscreenBtn.setAttribute(
-            "aria-label",
-            "Tela cheia"
-        );
-    }
-}
-
-/* Eventos de tela cheia */
-document.addEventListener(
-    "fullscreenchange",
-    updateFullscreenButton
-);
-
-document.addEventListener(
-    "webkitfullscreenchange",
-    updateFullscreenButton
-);
-
-/*
- * Permite usar o botão pelo controle remoto.
- */
-fullscreenBtn.addEventListener("keydown", function(event) {
-
-    if (
-        event.key === "Enter" ||
-        event.key === " " ||
-        event.keyCode === 13 ||
-        event.keyCode === 32
-    ) {
-        event.preventDefault();
-        fullscreenBtn.click();
-    }
-
-});
-
-/*
- * Inicialmente deixa os controles escondidos.
- */
-player.classList.remove("controls-visible");
-</script>
+<img src="logo.png?v=1">
 
 </body>
+
 </html>
