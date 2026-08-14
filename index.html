@@ -103,7 +103,7 @@ video {
 
 <div id="player">
 
-    <video id="video" autoplay muted playsinline>
+    <video id="video" autoplay muted loop playsinline>
         <source src="video.mp4" type="video/mp4">
     </video>
 
@@ -251,65 +251,6 @@ fullscreenBtn.addEventListener("keydown", function(event) {
  * Inicialmente deixa os controles escondidos.
  */
 player.classList.remove("controls-visible");
-
-
-/* =========================================================
-   TESTE A - REINÍCIO MANUAL DO VÍDEO
-   ========================================================= */
-
-/*
- * O atributo "loop" foi removido do <video>.
- *
- * Agora, quando o vídeo chegar ao final,
- * voltamos para o início manualmente.
- */
-video.addEventListener("ended", function () {
-
-    video.currentTime = 0;
-
-    video.play().catch(function(error) {
-        console.log(
-            "Não foi possível reiniciar o vídeo:",
-            error
-        );
-    });
-
-});
-
-
-/* =========================================================
-   ATUALIZAÇÃO AUTOMÁTICA DO VÍDEO
-   ========================================================= */
-
-/*
- * A cada 10 minutos, força o navegador a solicitar
- * novamente o arquivo video.mp4.
- *
- * A página NÃO é recarregada.
- */
-setInterval(function() {
-
-    const currentTime = video.currentTime;
-
-    video.src = "video.mp4?v=" + Date.now();
-
-    video.load();
-
-    /*
-     * Mantém aproximadamente a mesma posição
-     * em que o vídeo estava antes da atualização.
-     */
-    video.currentTime = currentTime;
-
-    video.play().catch(function(error) {
-        console.log(
-            "Não foi possível reproduzir o vídeo:",
-            error
-        );
-    });
-
-}, 1 * 60 * 1000);
-
 </script>
 
 </body>
