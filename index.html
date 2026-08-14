@@ -103,7 +103,7 @@ video {
 
 <div id="player">
 
-    <video id="video" autoplay muted loop playsinline>
+    <video id="video" autoplay muted playsinline>
         <source src="video.mp4" type="video/mp4">
     </video>
 
@@ -254,6 +254,30 @@ player.classList.remove("controls-visible");
 
 
 /* =========================================================
+   TESTE A - REINÍCIO MANUAL DO VÍDEO
+   ========================================================= */
+
+/*
+ * O atributo "loop" foi removido do <video>.
+ *
+ * Agora, quando o vídeo chegar ao final,
+ * voltamos para o início manualmente.
+ */
+video.addEventListener("ended", function () {
+
+    video.currentTime = 0;
+
+    video.play().catch(function(error) {
+        console.log(
+            "Não foi possível reiniciar o vídeo:",
+            error
+        );
+    });
+
+});
+
+
+/* =========================================================
    ATUALIZAÇÃO AUTOMÁTICA DO VÍDEO
    ========================================================= */
 
@@ -278,10 +302,13 @@ setInterval(function() {
     video.currentTime = currentTime;
 
     video.play().catch(function(error) {
-        console.log("Não foi possível reproduzir o vídeo:", error);
+        console.log(
+            "Não foi possível reproduzir o vídeo:",
+            error
+        );
     });
 
-}, 10 * 60 * 1000);
+}, 1 * 60 * 1000);
 
 </script>
 
